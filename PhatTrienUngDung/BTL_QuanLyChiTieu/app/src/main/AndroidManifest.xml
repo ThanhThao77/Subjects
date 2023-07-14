@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.btl">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/unnamed"
+        android:label="Quản lý chi tiêu"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BTL">
+
+        <activity
+            android:name=".service.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="MissingClass">
+        </activity>
+
+        <activity
+            android:name=".service.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN"-->
+<!--                    android:theme="@style/AppTheme.NoActionBar"/>-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <activity android:name=".service.LoginActivity"
+            android:exported="true">
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN"
+                            android:theme="@style/AppTheme.NoActionBar"/>
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,411 @@
+// Code mật mã Vigenere
+
+string p,k;
+    cout<<"P: ";
+    getline(cin,p);
+    cout<<"K: ";
+    getline(cin,k);
+    string c ="";
+    int j =0;
+    for(int i=0;i<p.size();i++)
+    {
+        
+        if(i%k.length()==0)
+        {
+            j = 0;
+            c+= So_kt((p[i]+k[j])%26);
+        }
+        else{
+            c+= So_kt((p[i]+k[j])%26);
+            
+        }
+        j++;
+    }
+    cout<<c;
+
+
+// Code rain_fence ( đọc các phần tử của ma trận theo từng cột để tạo thành ciphertext)
+string p ;
+    getline(cin,p);
+    char arr[5][5];
+    int x = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+           arr[i][j]=p[x]; 
+           x++;
+           if(p.length()<x)
+            arr[i][j]='X';
+        }
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            cout<<arr[i][j]<<" "; 
+        }
+        cout<<endl;
+    }
+    string c;
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+           c+=arr[j][i]; 
+        }
+    }
+
+// code mật mã affine
+string C = '';
+for(int i =0;i<p.Size();i++)
+{
+  int p = Kt_so(P[i]);
+  int c = (a*p+b)%26;
+  C= C+So_kt(C);
+}
+   //giai ma
+int a1;P ="";
+for(int i=1;i<26;i=i+2)
+  if(i*a%26==1)
+  { a1=i;break;}
+for(int i=0;i<C.size();i++)
+{
+int c=Kt_so(C[i]);
+int p = a1*(c-b+26)%26;
+P=P+So_kt(p);
+}
+
+
+// Monoalphabetic
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	string P, C, K, B;
+	B = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	cout<<"Nhap chuoi plaintext: "; getline(cin, P); C= P;
+	cout<<"Nhap chuoi khoa K: "; getline(cin, K);
+	// Ma hoa
+	for(int i = 0; i<P.size(); i++)
+		for (int j = 0; j<B.size(); j++)
+			if(P[i] == B[j])
+			{
+				C[i] = K[j];
+				break;
+			}
+		cout<<"Chuoi ma hoa: "<<C<<endl;;
+	// Giai ma
+	for(int i = 0; i<C.size(); i++)
+		for (int j = 0; j<B.size(); j++)
+			if(C[i] == K[j])
+			{
+				P[i] = B[j];
+				break;
+			}
+		cout<<"Chuoi giai ma: "<<P;
+}
+//  ma khoi feistel
+#include<iostream>
+using namespace std;
+const int MAX = 100;
+string P,C;
+char K[MAX];
+char L[MAX],R[MAX];
+char F(char r,char Ki)
+{
+    return r+Ki;
+}
+int main()
+{
+    int n =2;
+    cout<<"P: ";
+    getline(cin,P);
+    C = P;
+    R[0] = P[0];
+    L[0] = P[1];
+    cout<<"khoa K: ";cin>>K[0];
+    for (int i = 1; i <= n; i++)
+    {
+        K[i] = K[0]<<i;
+        R[i] = L[i-1] ^ F(R[i-1],K[i]);
+        L[i] = R[i-1];
+
+    }
+    C[0] = L[n];
+    C[1] = R[n];
+    cout<<"C: "<<C;
+    return 0;
+    
+}
+ //  thuat toan vermman
+#include<iostream>
+using namespace std;
+int main()
+{
+    string P,C;
+    char K;
+    cout<<"P: ";
+    getline(cin,P);
+    C = P;
+    cout<<"Nhap chuoi K: ";
+    cin>>K;
+    for (int i = 0; i < P.size(); i++)
+    {
+        C[i] = P[i]^K;
+    }
+    cout<<"Chuoi ma hoa: "<<C;
+    for (int i = 0; i < C.size(); i++)
+    {
+        P[i] = C[i]^K;
+    }
+    cout<<"Giai ma: "<<P;
+    
+
+}
+
+// thuat toan rain fence
+#include<iostream>
+using namespace std;
+int main()
+{
+    string P,C,C1,C2,K;
+    cout<<"P: ";
+    getline(cin,P);
+    for (int i = 0; i < P.size(); i++)
+    {
+        if(i%2==0) C1+=P[i];
+        else C2+= P[i];
+    }
+    C = C1+C2;
+    cout<<"Chuoi ma hoa C: "<<C<<endl;
+    int vitricat;
+    if(C.size()%2==0) vitricat = C.size()/2;
+    else vitricat = C.size()/2+1;
+    int x1 = 0,x2=1;
+    for (int i = 0; i < C.size(); i++)
+    {
+        if(i<vitricat)
+        {
+            P[x1] = C[i];
+            x1+=2;
+        }
+        else
+        {
+            P[x2] = C[i];
+            x2+=2;
+        }
+    }
+    cout<<"Chuoi giai ma: "<<P;
+}
+// thuat toan ???
+#include<iostream>
+using namespace std;
+int main()
+{
+    string a;
+    cin>>a;
+    string B = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+    a = a+B;
+    for (int i = 0; i < a.length(); i++)
+    {
+        for (int j = i+1; j < a.length(); j++)
+        {
+            if(a[j] == a[i]){
+                a.erase(j,1);
+                j--;
+            }
+        }
+        
+    }
+    char matran[5][5];
+    int dem = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            matran[i][j] = a[dem++];
+        }
+        
+    }
+    cout<<"Ma tran khoa: \n";
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            cout<<matran[i][j]<<" ";
+            cout<<endl;
+        }
+        
+    }
+}
+// thuật toán CAESAR tong quat
+#include<iostream>
+using namespace std;
+int KT_So(char c)
+{
+    return c-'a';
+}
+char So_Kt(int n)
+{
+    return 'a'+n;
+}
+string Giai_ma(string C,int i)
+{
+    string B;
+    for(int j = 0;j<C.size();j++)
+    {
+        int m = (KT_So(C[j])-i+26)%26;
+        B+= So_Kt(m);
+    }
+    return B;
+}
+string Ma_Hoa(string C,int i )
+{
+    string B;
+    for (int j = 0; j < C.size(); j++)
+    {
+        int m = (KT_So(C[j])+i)%26;
+        B+=So_Kt(m);
+    }
+    return B;
+}
+int main()
+{
+    string P,C;int K;
+    cout<<"P: ";cin>>P;
+    cout<<"Khoa K: ";cin>>K;
+    for (int i = 0; i < P.size(); i++)
+    {
+        int m = (KT_So(P[i])+K%26)%26;
+        C+=So_Kt(m);
+    }
+    cout<<"Chuoi ma hoa: "<<C;
+    P = "";
+    for (int i = 0; i < C.size(); i++)
+    {
+        int m = (KT_So(C[i])-K%26 + 26)%26;
+        P+=So_Kt(m);
+    }
+    cout<<"Chuoi giai ma: "<<P;
+    // B2 be khoa bang phuong phap brute-force
+    // string x = "ABCZYXQLA";
+    for (int i = 0; i < 26; i++)
+    {
+        string Giaima = Giai_ma(C,i);
+        string MaHoa = Ma_Hoa(Giaima,i);
+        int khoa = i;
+        cout<<"\n Khoa: "<<khoa<<"--->"<<Giai_ma(C,khoa);
+    }
+}
+// thuat toan Vigennere 
+#include<iostream>
+using namespace std;
+int KT_So(char c)
+{
+    return c-'a';
+}
+char So_Kt(int n)
+{
+    return 'a'+n;
+}
+string P,K;
+void check_k()
+{
+    if(P.size()<=K.size())
+        K.erase(P.size(),K.size());
+    while(P.size()>K.size())
+    {
+        K+=K;
+        K.erase(P.size(),K.size());
+    }
+}
+int main()
+{
+    string C;
+    cout<<"P :";
+    cin>>P;
+    cout<<"K= ";
+    cin>>K;
+    check_k();
+    cout<<K;
+    for (int i = 0; i < P.size(); i++)
+    {
+        int m = (KT_So(P[i])+KT_So(K[i])+26)%26;
+        C+= So_Kt(m);
+    }
+    cout<<"Chuoi ma hoa: "<<C;
+    P = "";
+    for (int i = 0; i < C.size(); i++)
+    {
+         int m = (KT_So(P[i])-KT_So(K[i])+26)%26;
+        P+= So_Kt(m);
+    }
+    cout<<"Chuoi giai ma: "<<P;
+    
+}`
+// thuat toan ???
+#include<iostream>
+using namespace std;
+int main()
+{
+	string P,C,K;
+	cout<<"P: ";getline(cin,P);
+	cout<<"K: ";getline(cin,P);
+	for(int i = 0;i<P.size();i++)
+	{
+		int j;
+		j = i%(K.size());
+		cout<<j<<endl;
+		C[i] = P[i]^K[j];
+	}
+	cout<<"chuoi ma hoa: <<C;
+	for(int i = 0;i<C.size();i++)
+	{
+		int j;
+		j = i%(K.size());
+		cout<<j<<endl;
+		P[i] = C[i]^K[j];
+	}
+	cout<<"Chuoi giai ma: "<<P;
+}
+//lập trình nhập một chuỗi kí tự P từ bàn phím.Nhập 2 số nguyên a,b thuộc Z26. Mã hóa chuỗi ban đầu theo công thức C= P/a+b
+// trong do P la bản rõ,C là kí tự mã hóa, các phép tính được thực hiện trong Z26.Hiện chuỗi sau khi mã hóa ra màn hình.Giải mã và hiện chuỗi.
+#include<iostream>
+using namespace std;
+int KT_So(char c)
+{
+    return c-'a';
+}
+char So_Kt(int n)
+{
+    return 'a'+n;
+}
+string P,K;
+int main()
+{
+    string P,C="";
+    int a,b;
+    cout<<"P: ";
+    getline(cin,P);
+    cout<<"a: ";
+    cin>>a;
+    cout<<"b: ";
+    
+    for (int i = 0; i < P.size(); i++)
+    {
+        int m  = ((KT_So(P[i])/a)+b)%26;
+        C+=So_Kt(m);
+    }
+    cout<<"Chuoi ma hoa "<<C;
+    P = "";
+    for (int i = 0; i < C.size(); i++)
+    {
+        int m = ((KT_So(C[i])-b)*a)%26;
+        P+= So_Kt(m);
+    }
+    cout<<"Chuoi giai ma "<<P;
+}
+
